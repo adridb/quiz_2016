@@ -35,7 +35,11 @@ exports.ownershipRequired = function(req, res, next){
 
 // GET /quizzes
 exports.index = function(req, res, next) {
-	models.Quiz.findAll()
+  var aux = (req.query.search !== undefined)? req.query.search : "";
+ 
+   models.Quiz.findAll({where: {question: {$like: "%"+aux+"%"}}})      
+      
+	
 		.then(function(quizzes) {
 			res.render('quizzes/index.ejs', { quizzes: quizzes});
 		})
