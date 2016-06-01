@@ -8,6 +8,7 @@ var session = require('express-session');
 var partials = require('express-partials');
 var flash = require('express-flash');
 var methodOverride = require('method-override');
+var sessionController = require('./controllers/session_controller');
 
 var routes = require('./routes/index');
 
@@ -40,7 +41,8 @@ app.use(function(req, res, next) {
 
    next();
 });
-
+//autologout
+app.use('/', sessionController.comp_tiempo);
 app.use('/', routes);
 
 // catch 404 and forward to error handler
@@ -49,6 +51,9 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
+
+
 
 // error handlers
 
